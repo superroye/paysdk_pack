@@ -13,6 +13,7 @@ def channelPack(name):
         shutil.rmtree(outdir)
 
     createDir(name)
+    copyRes(name)
 
     javaSrcdir = Config.getSrcPath() + name + "/src/main/java"
 
@@ -63,8 +64,17 @@ def createDir(name):
     outdir = channeldir+"/out/plugin"
     libs = outdir+"/libs"
     res = outdir + "/res"
+    assets = outdir + "/assets"
     os.makedirs(libs)
     os.makedirs(res)
+    os.makedirs(assets)
+
+def copyRes(name):
+    channeldir = Config.getSrcPath() + name
+    outdir = channeldir+"/out/plugin"
+    Common.copyFiles(channeldir+"/src/main/assets",outdir + "/assets")
+    Common.copyFiles(channeldir + "/src/main/res", outdir + "/res")
+    Common.copyFiles(channeldir + "/src/main/AndroidManifest.xml", outdir)
 
 def copyJars(name):
     print "copy jars..."
@@ -87,7 +97,6 @@ def copyJars(name):
                 for file1 in list1:
                     shutil.copy(libs + "/" + file + "/" + file1, other)
 
-def
 
 
 def createDex(name):
@@ -102,4 +111,4 @@ def createDex(name):
     print cmdDex
     Common.ExecuteCmd(cmdDex)
 
-channelPack("migulib")
+channelPack("m4399lib")
