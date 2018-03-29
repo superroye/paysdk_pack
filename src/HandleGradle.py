@@ -9,7 +9,7 @@ def handleXLSDK(gradleFile):
     file.close()
 
     pattarn = "dependencies {(.*?)}";
-    tStr = "\n   implementation fileTree(include: ['*.jar'], dir: 'libs')\n"
+    tStr = "\n   api fileTree(include: ['*.jar'], dir: 'libs')\n"
     content1 = re.findall(pattarn, content, flags=re.DOTALL)
     content = content.replace(content1[0], tStr)
     file = open(gradleFile, 'w')
@@ -22,7 +22,7 @@ def handlePlugin(gradleFile):
     file.close()
 
     pattarn = "dependencies {(.*?)}"
-    tStr = "\n   implementation fileTree(include: ['*.jar'], dir: 'libs')\n"
+    tStr = "\n   api fileTree(include: ['*.jar'], dir: 'libs')\n"
     content1 = re.findall(pattarn, content, flags=re.DOTALL)
     content = content.replace(content1[0], tStr)
     file = open(gradleFile, 'w')

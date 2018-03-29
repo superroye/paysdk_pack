@@ -3,7 +3,7 @@
 Usage: gopack.py [flags] <input_apk_file> <game_folder> <output_apk_folder>
 """
 import re
-import sysconfig
+import sys
 import platform
 import shutil
 import subprocess
@@ -13,9 +13,9 @@ import os
 class Tee(object):
     def __init__(self):
         self.file = open("CoPack.log", "w+")
-        self.stdout = sysconfig.stdout
+        self.stdout = sys.stdout
     def __del__(self):
-        sysconfig.stdout = self.stdout
+        sys.stdout = self.stdout
         self.file.close()
     def write(self, data):
         self.file.write(data)
@@ -28,22 +28,22 @@ sdk = ''
 outDir = ''
 
 def Usage(usage):
-    print (usage)
+    print usage
 
 def Msg(msg):
     global flag
     if flag == '-v':
-        print (msg)
+        print msg
 
 def ErrorMsg(msg):
-    print (msg)
+    print msg
     
 def ErrorMsgThrowException(msg):
-    print (msg)
+    print msg
     raise Exception('Execute Command Error')
 
 def ErrorMsgAndExit(msg, ret=1):
-    print (msg)
+    print msg
     exit(ret) 
     
 def ExecuteCmd(cmd):
@@ -54,10 +54,10 @@ def ExecuteCmd(cmd):
         st.dwFlags = subprocess.STARTF_USESHOWWINDOW
         st.wShowWindow = subprocess.SW_HIDE
         cmd = str(cmd).encode('gbk')
-    print (cmd)
+    print cmd
     s = subprocess.Popen(cmd, shell=True)
     ret = s.wait()
-
+    
     if ret:
         s = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         stdoutput, erroutput = s.communicate()
@@ -70,11 +70,11 @@ def ExecuteCmd(cmd):
 
 def GetSystem():
     system = 'Windows'
-    if sysconfig.platform.startswith('win'):
+    if sys.platform.startswith('win'):
         system = 'Windows'
-    elif sysconfig.platform.startswith('linux'):
+    elif sys.platform.startswith('linux'):
         system = 'Linux'
-    elif sysconfig.platform.startswith('darwin'):
+    elif sys.platform.startswith('darwin'):
         system = 'Mac'
     return system
 

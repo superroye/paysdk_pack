@@ -2,25 +2,14 @@
 import Buildjar
 import Copy
 import Config
-import HandleGradle
+import HandleApk
 
-def toPack():
-    # print(Config.getSrcPath())
-    # print(Config.getOutPath())
+def toPack(apkPath, plugin):
+    HandleApk.DecompileApk(apkPath, plugin)
+    print "pack plugin apk"
 
-    Copy.makeRoot()
-    Copy.makeLibDir("paysdk", "XLSdkLib")
-    Copy.makeLibDir("paycommonlib", "XLSdkLib")
-    Copy.makeLibDir("mipaylib", "xiaomiPlugin")
-    Copy.makeSDKDemo("app","XLSDKDemo")
-
-    Buildjar.buildJar()
-
-    HandleGradle.handleDemo(Config.getOutPath()+"/XLSDKDemo/build.gradle")
-    HandleGradle.handleXLSDK(Config.getOutPath()+"/XLSdkLib/build.gradle")
-    HandleGradle.handlePlugin(Config.getOutPath()+"/xiaomiPlugin/build.gradle")
-    HandleGradle.createRootNeedGradles()
+toPack("D:\\work_test\\demo.apk","D:\\work_test\\temp")
 
 
-toPack()
+
 

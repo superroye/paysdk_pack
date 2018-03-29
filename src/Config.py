@@ -1,4 +1,6 @@
-
+# -*- coding: utf-8 -*-
+"""
+"""
 srcPath = "D:/workspace/XLPayDemo/"
 outPath = "D:/workspace/XLPayDemo/XLSDK/"
 
@@ -9,3 +11,6 @@ def getSrcPath():
 def getOutPath():
     global outPath
     return outPath
+
+def ParseConfig(config_file):
+    print "haha" 

@@ -1,7 +1,10 @@
+#coding:utf-8
 import os
 import Common
 import shutil
 import Config
+
+#渠道插件打包
 
 workPath = ""
 def channelPack(name):
@@ -46,6 +49,16 @@ def channelPack(name):
     copyJars(name)
     createDex(name)
 
+    copyOut(outdir, name)
+
+
+def copyOut(outdir, name):
+    myout = workPath + "/out/" + name + "Plugin"
+    if os.path.exists(myout):
+        shutil.rmtree(myout)
+        os.makedirs(myout)
+    Common.copyFiles(outdir+"/plugin", myout)
+
 def savaPathToTxt(outdir,srcpath):
     sf = open(outdir+"/sources.txt", "w")
     savePath(sf, srcpath)
@@ -65,16 +78,18 @@ def createDir(name):
     libs = outdir+"/libs"
     res = outdir + "/res"
     assets = outdir + "/assets"
+    dex = outdir + "/out"
     os.makedirs(libs)
     os.makedirs(res)
     os.makedirs(assets)
+    os.makedirs(dex)
 
 def copyRes(name):
     channeldir = Config.getSrcPath() + name
     outdir = channeldir+"/out/plugin"
     Common.copyFiles(channeldir+"/src/main/assets",outdir + "/assets")
     Common.copyFiles(channeldir + "/src/main/res", outdir + "/res")
-    Common.copyFiles(channeldir + "/src/main/AndroidManifest.xml", outdir)
+    Common.copyFiles(channeldir + "/AndroidManifest_channel.xml", outdir)
 
 def copyJars(name):
     print "copy jars..."
@@ -105,7 +120,7 @@ def createDex(name):
 
     base = Config.getSrcPath() + name
     outdir = base + "/out/plugin"
-    outPath = outdir + "/" + name + ".dex"
+    outPath = outdir + "/out/" + name + ".dex"
     inPath = base +"/out/jar/"
     cmdDex = 'java -jar "%s" --dex --output="%s" "%s"' % (dx, outPath, inPath)
     print cmdDex
